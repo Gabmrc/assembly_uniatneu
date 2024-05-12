@@ -1,0 +1,38 @@
+;IDE: https://www.mycompiler.io/pt/new/asm-x86_64
+
+
+section .data
+    prompt db 'Seu nome é: ', 0
+    max_input_len equ 255
+
+section .bss
+    name resb max_input_len + 1 ; Reserva um byte extra para o caractere nulo
+
+section .text
+    global _start
+
+_start:
+    ; Imprime o prompt
+    mov rax, 0x1            
+    mov rdi, 0x1            
+    mov rsi, prompt         
+    mov rdx, max_input_len  
+    syscall                 
+
+    ; Lê a entrada do usuário
+    mov rax, 0x0            
+    mov rdi, 0x0            
+    mov rsi, name           
+    mov rdx, max_input_len  
+    syscall                 
+
+    ; Imprime o nome
+    mov rax, 0x1            
+    mov rdi, 0x1            
+    mov rsi, name           
+    syscall                 
+
+    ; Sai do programa
+    mov rax, 0x60           
+    xor rdi, rdi            
+    syscall                 
